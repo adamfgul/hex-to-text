@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO META TAGS EN ESPAÑOL -->
+  <title>Convertidor de Hexadecimal a Texto – Herramienta en Línea</title>
+  <meta name="description" content="Convierte cadenas hexadecimal (hex) en texto legible y viceversa con esta herramienta gratuita en línea. Rápida, simple y útil para programadores y estudiantes." />
+  <link rel="alternate" hreflang="en" href="https://hex-to-text.com/" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .converter-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    p.description {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 60px;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: none;
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin: 6px 4px;
+      padding: 10px 14px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .copy-btn {
+      background-color: #007BFF;
+    }
+
+    .copy-btn:hover {
+      background-color: #0069d9;
+    }
+
+    .output {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+      word-break: break-word;
+      font-size: 15px;
+    }
+
+    hr {
+      margin: 20px 0;
+      border: none;
+      border-top: 1px solid #ccc;
+    }
+
+    .instructions {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .instructions h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .instructions p, .instructions li {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    code {
+      background-color: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    ul {
+      text-align: left;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="converter-box">
+    <!-- Language switch -->
+    <div style="text-align: right; margin-bottom: 10px;">
+      <a href="/" style="font-size: 14px;">English</a>
+    </div>
+
+    <h1>Convertidor de Hexadecimal a Texto</h1>
+    <p class="description">
+      Esta herramienta gratuita te permite convertir cadenas hexadecimal (hex) en texto legible, y viceversa. Es ideal para programadores, estudiantes y tareas de codificación.
+    </p>
+
+    <!-- Hex a Texto -->
+    <textarea id="hexInput" placeholder="Ingresa código hex (ej. 48656c6c6f)"></textarea>
+    <button onclick="convertHexToText()">Hex ➜ Texto</button>
+    <button class="copy-btn" onclick="copyToClipboard('outputText')">Copiar Texto</button>
+    <div class="output" id="outputText"></div>
+
+    <hr />
+
+    <!-- Texto a Hex -->
+    <textarea id="textInput" placeholder="Ingresa texto (ej. Hola)"></textarea>
+    <button onclick="convertTextToHex()">Texto ➜ Hex</button>
+    <button class="copy-btn" onclick="copyToClipboard('outputHex')">Copiar Hex</button>
+    <div class="output" id="outputHex"></div>
+  </div>
+
+  <script>
+    function convertHexToText() {
+      const hex = document.getElementById("hexInput").value.trim();
+      let text = "";
+
+      if (hex.length % 2 !== 0 || !/^[0-9a-fA-F]+$/.test(hex)) {
+        document.getElementById("outputText").textContent = "Entrada hex inválida.";
+        return;
+      }
+
+      for (let i = 0; i < hex.length; i += 2) {
+        const part = hex.substr(i, 2);
+        const char = String.fromCharCode(parseInt(part, 16));
+        text += char;
+      }
+
+      document.getElementById("outputText").textContent = text || "Resultado vacío";
+    }
+
+    function convertTextToHex() {
+      const text = document.getElementById("textInput").value;
+      let hex = "";
+
+      if (!text) {
+        document.getElementById("outputHex").textContent = "Por favor ingresa texto.";
+        return;
+      }
+
+      for (let i = 0; i < text.length; i++) {
+        hex += text.charCodeAt(i).toString(16);
+      }
+
+      document.getElementById("outputHex").textContent = hex;
+    }
+
+    function copyToClipboard(elementId) {
+      const text = document.getElementById(elementId).textContent;
+      if (!text || text.includes("inválida") || text.includes("Por favor") || text === "Resultado vacío") {
+        alert("Nada que copiar.");
+        return;
+      }
+
+      navigator.clipboard.writeText(text)
+        .then(() => alert("¡Copiado al portapapeles!"))
+        .catch(err => alert("Error al copiar: " + err));
+    }
+  </script>
+
+  <!-- Instrucciones -->
+  <div class="instructions">
+    <h2>Cómo Usar el Convertidor de Hexadecimal a Texto</h2>
+    <p>
+      Esta herramienta permite convertir fácilmente entre valores hexadecimales y texto legible:
+    </p>
+    <ul>
+      <li><strong>Hex a Texto:</strong> Ingresa una cadena hexadecimal válida (como <code>48656c6c6f</code>) en el primer cuadro. Haz clic en <strong>"Hex ➜ Texto"</strong> para convertirla.</li>
+      <li><strong>Texto a Hex:</strong> Escribe cualquier mensaje (como <code>Hola</code>) en el segundo cuadro. Haz clic en <strong>"Texto ➜ Hex"</strong> para convertirlo a hexadecimal.</li>
+      <li>Puedes usar los botones de <strong>"Copiar"</strong> para guardar fácilmente los resultados.</li>
+    </ul>
+    <p>
+      Nota: Los valores hexadecimales deben tener solo caracteres válidos (0–9, a–f) y longitud par para una conversión correcta.
+    </
