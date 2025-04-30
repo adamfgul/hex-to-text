@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✅ SEO META TAGS -->
+  <title>Hex to Text Converter – Online Tool to Convert Hexadecimal to Text</title>
+  <meta name="description" content="Use this free online tool to quickly convert hexadecimal (hex) strings to text and vice versa. Fast, simple, and ideal for developers, students, and data encoding tasks." />
+
+  <!-- ✅ Styling -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .converter-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    p.description {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 60px;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: none;
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin: 6px 4px;
+      padding: 10px 14px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .copy-btn {
+      background-color: #007BFF;
+    }
+
+    .copy-btn:hover {
+      background-color: #0069d9;
+    }
+
+    .output {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #333;
+      word-break: break-word;
+      font-size: 15px;
+    }
+
+    hr {
+      margin: 20px 0;
+      border: none;
+      border-top: 1px solid #ccc;
+    }
+
+    .instructions {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .instructions h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .instructions p, .instructions li {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    code {
+      background-color: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    ul {
+      text-align: left;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="converter-box">
+    <h1>Hex ⇄ Text Converter</h1>
+    <p class="description">
+      This free tool helps you convert hexadecimal strings into readable text, and vice versa. It's perfect for programmers, learners, and developers working with encoded data.
+    </p>
+
+    <!-- Hex to Text -->
+    <textarea id="hexInput" placeholder="Enter hex (e.g. 48656c6c6f)"></textarea>
+    <button onclick="convertHexToText()">Hex ➜ Text</button>
+    <button class="copy-btn" onclick="copyToClipboard('outputText')">Copy Text</button>
+    <div class="output" id="outputText"></div>
+
+    <hr />
+
+    <!-- Text to Hex -->
+    <textarea id="textInput" placeholder="Enter text (e.g. Hello)"></textarea>
+    <button onclick="convertTextToHex()">Text ➜ Hex</button>
+    <button class="copy-btn" onclick="copyToClipboard('outputHex')">Copy Hex</button>
+    <div class="output" id="outputHex"></div>
+  </div>
+
+  <script>
+    function convertHexToText() {
+      const hex = document.getElementById("hexInput").value.trim();
+      let text = "";
+
+      if (hex.length % 2 !== 0 || !/^[0-9a-fA-F]+$/.test(hex)) {
+        document.getElementById("outputText").textContent = "Invalid hex input!";
+        return;
+      }
+
+      for (let i = 0; i < hex.length; i += 2) {
+        const part = hex.substr(i, 2);
+        const char = String.fromCharCode(parseInt(part, 16));
+        text += char;
+      }
+
+      document.getElementById("outputText").textContent = text || "Result is empty";
+    }
+
+    function convertTextToHex() {
+      const text = document.getElementById("textInput").value;
+      let hex = "";
+
+      if (!text) {
+        document.getElementById("outputHex").textContent = "Please enter text";
+        return;
+      }
+
+      for (let i = 0; i < text.length; i++) {
+        hex += text.charCodeAt(i).toString(16);
+      }
+
+      document.getElementById("outputHex").textContent = hex;
+    }
+
+    function copyToClipboard(elementId) {
+      const text = document.getElementById(elementId).textContent;
+      if (!text || text.includes("Invalid") || text.includes("Please enter") || text === "Result is empty") {
+        alert("Nothing to copy!");
+        return;
+      }
+
+      navigator.clipboard.writeText(text)
+        .then(() => alert("Copied to clipboard!"))
+        .catch(err => alert("Failed to copy: " + err));
+    }
+  </script>
+
+  <!-- Instructions Section -->
+  <div class="instructions">
+    <h2>How to Use Hex to Text Tool</h2>
+    <p>
+      This tool lets you easily convert between hexadecimal (hex) values and human-readable text:
+    </p>
+    <ul>
+      <li><strong>Hex to Text:</strong> Enter a valid hexadecimal string (like <code>48656c6c6f</code>) in the first box. Click the <strong>"Hex ➜ Text"</strong> button to decode it into regular text.</li>
+      <li><strong>Text to Hex:</strong> Type your message (like <code>Hello</code>) in the second box. Click the <strong>"Text ➜ Hex"</strong> button to encode it into a hexadecimal string.</li>
+      <li>Click the <strong>"Copy"</strong> buttons to copy the result to your clipboard for use elsewhere.</li>
+    </ul>
+    <p>
+      Note: Hexadecimal values must contain only valid hex characters (0–9, a–f) and have an even number of characters for proper decoding.
+    </p>
+  </div>
+
+</body>
+</html>
