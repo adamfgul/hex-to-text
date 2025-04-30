@@ -125,6 +125,33 @@
 <body>
 
   <div class="converter-box">
+
+    <div style="text-align: right; margin-bottom: 10px;">
+  <label for="lang-select" style="font-size: 14px; margin-right: 5px;">🌐 Language:</label>
+  <select id="lang-select" onchange="switchLanguage(this.value)" style="font-size: 14px;">
+    <option value="/">EN</option>
+    <option value="/de/">DE</option>
+    <option value="/ja/">JA</option>
+    <option value="/fr/">FR</option>
+    <option value="/nl/">NL</option>
+    <option value="/no/">NO</option>
+    <option value="/da/">DA</option>
+    <option value="/sv/">SV</option>
+    <option value="/fi/">FI</option>
+    <option value="/ko/">KO</option>
+    <option value="/it/">IT</option>
+    <option value="/ar/">AR</option>
+    <option value="/he/">HE</option>
+    <option value="/zh/">ZH</option>
+    <option value="/es/">ES</option>
+    <option value="/pt/">PT</option>
+    <option value="/cs/">CS</option>
+    <option value="/sk/">SK</option>
+    <option value="/et/">ET</option>
+    <option value="/is/">IS</option>
+  </select>
+</div>
+
     <h1>Hex ⇄ Text Converter</h1>
     <p class="description">
       This free tool helps you convert hexadecimal strings into readable text, and vice versa. It's perfect for programmers, learners, and developers working with encoded data.
@@ -191,6 +218,11 @@
         .then(() => alert("Copied to clipboard!"))
         .catch(err => alert("Failed to copy: " + err));
     }
+
+    function switchLanguage(path) {
+  window.location.href = path;
+}
+
   </script>
 
   <!-- Instructions Section -->
